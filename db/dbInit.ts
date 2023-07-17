@@ -1,3 +1,4 @@
+import logger from '../utils/logger';
 import connection from './dbConnection';
 const createQueries = [
 	'CREATE TABLE IF NOT EXISTS `users` ( `id` INT NOT NULL AUTO_INCREMENT, `login` VARCHAR(50) NOT NULL , `password` VARCHAR(100) NOT NULL ,  `first_name` VARCHAR(50) NOT NULL , `last_name` VARCHAR(50) NOT NULL , `balance` INT NOT NULL DEFAULT 0, PRIMARY KEY (`id`))',
@@ -8,10 +9,10 @@ const dbInit = () => {
 	try {
 		connection.connect(function (err) {
 			if (err) {
-				console.error('DB - error connecting: ' + err.stack);
+				logger.error('DB - error connecting: ' + err.stack);
 				return;
 			}
-			console.log('DB connected');
+			logger.info('DB connected');
 		});
 		
 		connection.query(createQueries[0], function (error) {
@@ -23,7 +24,7 @@ const dbInit = () => {
 		});
 	} catch (err) {
 		const errCasted = err as Error;
-		console.error('DB - error connecting: ' + errCasted.stack);
+		logger.error('DB - error connecting: ' + errCasted.stack);
 	}
 };
 
