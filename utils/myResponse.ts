@@ -13,8 +13,8 @@ export const failure = (res: Response, err: any, code = 500) => {
 	logger.error(errCasted.stack);
 	return res.status(code).send({
 		isSuccess: false,
-		message: errCasted.message,
-		name: errCasted.name,
+		message: process.env.NODE_ENV === 'production' ? '[hidden on prod]' : errCasted.message,
+		name: process.env.NODE_ENV === 'production' ? 'Error' : errCasted.name,
 		stack: process.env.NODE_ENV === 'production' ? '[hidden on prod]' : errCasted.stack!
 	});
 };
