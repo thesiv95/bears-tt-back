@@ -1,21 +1,19 @@
 import dotenv from 'dotenv';
 import express from 'express';
 import cors from 'cors';
-import connection from './db/connection';
-
+import dbInit from './db/dbInit';
+import usersRouter from './routers/usersRouter';
+import winnersRouter from './routers/winnersRouter';
 dotenv.config();
 
-connection.connect(function (err) {
-	if (err) {
-		console.error('DB - error connecting: ' + err.stack);
-		return;
-	}
-	console.log('DB connected');
-});
+dbInit();
 
 const app = express();
 app.use(express.json());
 app.use(cors());
+
+app.use('/users', usersRouter);
+app.use('/winners', winnersRouter);
 
 const APP_PORT = process.env.APP_PORT || 7000;
 
