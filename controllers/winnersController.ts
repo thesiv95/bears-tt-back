@@ -10,7 +10,7 @@ const getLimit = (q: any) => {
 export const getWinnersHandler = async (req: Request, res: Response, next: NextFunction) => {
 	try {
 		const limit = getLimit(req.query);
-		const query = 'SELECT * FROM `winners` ORDER BY score DESC ' + limit;
+		const query = 'SELECT * FROM `winners` INNER JOIN `users` ON winners.user_id = users.id ORDER BY score DESC ' + limit;
 
 		const data = await dbQueryWrapper(query) as Winner[];
 
