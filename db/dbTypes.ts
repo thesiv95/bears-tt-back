@@ -1,5 +1,5 @@
 export type User = {
-	id: number;
+	id?: number;
 	login: string;
 	password: string;
 	first_name: string;
@@ -8,8 +8,9 @@ export type User = {
 }
 
 export type Winner = {
-	id: number;
+	id?: number;
 	user_id: string;
 	score: number;
+	is_jackpot: number;
 	win_date: string;
 }

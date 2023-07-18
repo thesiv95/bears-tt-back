@@ -12,7 +12,7 @@ export const getWinnersHandler = async (req: Request, res: Response, next: NextF
 		const limit = getLimit(req.query);
 		const query = 'SELECT * FROM `winners` ORDER BY score DESC ' + limit;
 
-		const data = await dbQueryWrapper(query);
+		const data = await dbQueryWrapper(query) as Winner[];
 
 		next(MyResponse.success(res, data));
 	} catch (error) {
@@ -25,16 +25,18 @@ export const postWinnersHandler = async (req: Request, res: Response, next: Next
 		const {
 			user_id,
 			score,
+			is_jackpot,
 			win_date
 		} = req.body;
 
 		const payload = {
 			user_id,
 			score,
+			is_jackpot: Boolean(is_jackpot) ? 1 : 0,
 			win_date
 		} as Winner;
 
-		const query = `INSERT INTO \`winners\` (\`user_id\`, \`score\`, \`win_date\`) VALUES ("${user_id}", "${score}", "${win_date}")`;
+		const query = `INSERT INTO \`winners\` (\`user_id\`, \`score\`, \`is_jackpot\`, \`win_date\`) VALUES ("${user_id}", "${score}", ${is_jackpot}, "${win_date}")`;
 
 		await dbQueryWrapper(query);
 		next(MyResponse.success(res, payload, 201));
