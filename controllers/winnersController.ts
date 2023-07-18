@@ -22,7 +22,8 @@ export const getWinnersHandler = async (req: Request, res: Response, next: NextF
 
 export const getJackpot = (_req: Request, res: Response, next: NextFunction) => {
 	try {
-		const randomJackpot = Math.floor(Math.random() * 1000);
+		// from 1000 to 10000
+		const randomJackpot = Math.floor(Math.random() * (10000 - 1000) + 1000);
 		next(MyResponse.success(res, {randomJackpot}));
 	} catch (error) {
 		next(MyResponse.failure(res, error));
