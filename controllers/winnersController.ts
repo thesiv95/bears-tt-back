@@ -20,6 +20,16 @@ export const getWinnersHandler = async (req: Request, res: Response, next: NextF
 	}
 };
 
+export const getJackpot = (_req: Request, res: Response, next: NextFunction) => {
+	try {
+		const randomJackpot = Math.floor(Math.random() * 1000);
+		next(MyResponse.success(res, {randomJackpot}));
+	} catch (error) {
+		next(MyResponse.failure(res, error));
+	}
+
+}
+
 export const postWinnersHandler = async (req: Request, res: Response, next: NextFunction) => {
 	try {
 		const {
